@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Conversation from "@/components/Conversation";
 import { BarBackground } from "@/components/barBackground";
+import QuestionForm from "@/components/QuestionForm";
 
 const RoomPage = () => {
   const [username, setUsername] = useState("");
@@ -29,8 +29,7 @@ const RoomPage = () => {
         <BarBackground />
         <h1>Room: {roomCode}</h1>
         <p>Username: {username}</p>
-        {/* Pass roomCode and username as props to Conversation component */}
-        <Conversation username={username} roomCode={roomCode} />
+        <QuestionForm />
     </>
   );
 };
