@@ -34,17 +34,18 @@ const EnterNamePage = () => {
   return (
     <>
         <BarBackground />
-        <h1 className="text-4xl font-bold">Enter Your Name</h1>
-        <p className="text-lg">Please enter your username to join the room.</p>
-        <div className="flex gap-1">
+        <h1 className="text-4xl text-white text-shadow-effect mb-11">Enter Your Name</h1>
+        <div className="flex gap-1 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
             <input
             type="text"
-            className="border border-gray-300 rounded p-2 mr-2"
+            className="p-2 mr-2 text-4xl w-full"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Your name"
+            spellCheck={false}
             />
             <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className="bg-gray-900 text-white text-4xl px-4 py-2"
             ref={enterNameBtnRef}
             >
             Submit
