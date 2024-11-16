@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { BarBackground } from "@/components/barBackground";
 
+let audioInstance: HTMLAudioElement | null = null; // Global variable to track the audio instance
 
 const HomePage = () => {
   const [roomCode, setRoomCode] = useState<string>(""); // Room code as string
@@ -14,24 +15,33 @@ const HomePage = () => {
       // Store the room code in session storage or pass via query
       sessionStorage.setItem("roomCode", roomCode);
       router.push("/enter-name"); // Redirect to the name input page
-      // Create the audio element
-      const audio = new Audio('soundtracks/loading_menu.mp3');
-      audio.loop = true;
-      // Handle audio play success and error
-      audio.addEventListener("canplaythrough", () => {
-        audio.play()
-      });
+
+      // Check if an audio instance already exists
+      if (!audioInstance) {
+        audioInstance = new Audio("soundtracks/loading_menu.mp3");
+        audioInstance.loop = true;
+
+        // Play audio and handle any play errors
+        audioInstance.addEventListener("canplaythrough", () => {
+          audioInstance?.play().catch((error) => {
+            console.error("Audio playback error:", error);
+          });
+        });
+      }
     } else {
       alert("Please enter a valid 5-digit room code.");
     }
   };
 
   return (
-    
     <>
       <BarBackground />
       <div className="mb-1">
-        <img src="growth_logo.png" alt="Growth Logo" className="h-[320px] max-w-full px-5 object-contain" />
+        <img
+          src="growth_logo.png"
+          alt="Growth Logo"
+          className="h-[320px] max-w-full px-5 object-contain"
+        />
       </div>
 
       {/* Input for room code */}
@@ -59,7 +69,11 @@ const HomePage = () => {
         </button>
       </div>
       <div className="mt-11 mb-11">
-        <img src="hacksheffield_logo.png" alt="Made for Hacksheffield9" className="h-[45px] w-auto" />
+        <img
+          src="hacksheffield_logo.png"
+          alt="Made for Hacksheffield9"
+          className="h-[45px] w-auto"
+        />
       </div>
     </>
   );
