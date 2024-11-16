@@ -10,7 +10,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={jersey_25.className}>{children}</body>
+      <body className={jersey_25.className}>
+        <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

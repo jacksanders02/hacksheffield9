@@ -3,6 +3,7 @@
 
 import React, {useState, useEffect, useRef} from "react";
 import { useRouter } from "next/navigation";
+import { BarBackground } from "@/components/barBackground";
 
 const EnterNamePage = () => {
   const [username, setUsername] = useState("");
@@ -34,7 +35,7 @@ const EnterNamePage = () => {
     <main className="flex min-h-screen flex-col p-6 items-center justify-center space-y-2">
       <h1 className="text-4xl font-bold">Enter Your Name</h1>
       <p className="text-lg">Please enter your username to join the room.</p>
-
+      <BarBackground />
       <div className="flex gap-1">
         <input
           type="text"
