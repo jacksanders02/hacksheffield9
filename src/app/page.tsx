@@ -18,7 +18,7 @@
 //   );
 // }
 
-import Conversation from '@/src/components/Conversation'
+import Conversation from '@/components/Conversation'
 
 import React from 'react'
 import About from '../components/about'

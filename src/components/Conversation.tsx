@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Input } from "@/src/components/input";
-import { Button } from "@/src/components/button";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
 import { Send } from "lucide-react";
 import Message from "./Message";
-import { pusherClient } from "@/src/lib/pusher";
-import { sendMessage } from "@/src/actions/message.action";
+import { pusherClient } from "@/lib/pusher";
+import { sendMessage } from "@/actions/message.action";
 
 const Conversation = () => {
   const [messages, setMessages] = useState<string[]>([]);
