@@ -14,6 +14,13 @@ const HomePage = () => {
       // Store the room code in session storage or pass via query
       sessionStorage.setItem("roomCode", roomCode);
       router.push("/enter-name"); // Redirect to the name input page
+      // Create the audio element
+      const audio = new Audio('soundtracks/loading_menu.mp3');
+      audio.loop = true;
+      // Handle audio play success and error
+      audio.addEventListener("canplaythrough", () => {
+        audio.play()
+      });
     } else {
       alert("Please enter a valid 5-digit room code.");
     }
