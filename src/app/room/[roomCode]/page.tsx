@@ -1,23 +1,20 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Conversation from "@/components/Conversation";
 
-type RoomPageProps = {
-  params: {
-    roomCode: string;
-  };
-};
-
-const RoomPage = ({ params }: RoomPageProps) => {
+const RoomPage = () => {
   const [username, setUsername] = useState("");
-  const { roomCode } = params; // Extract roomCode from params
+  
+  const roomCode = usePathname().replace("/room/", ""); // remove room/... from the path
+ 
   const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUsername = sessionStorage.getItem("username");
+      
       if (storedUsername) {
         setUsername(storedUsername);
       } else {
