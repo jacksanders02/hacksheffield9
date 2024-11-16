@@ -29,7 +29,7 @@ export function BarBackground() {
 
     return(
         <>        
-            <div className="bar-container absolute left-0 right-0 flex flex-row z-0 items-end -z-50">
+            <div className="bar-container absolute left-0 right-0 flex flex-row items-end -z-50">
             {/* Bars with different heights and offsets */}
                 {bars.map((bar) => (
                     <div
