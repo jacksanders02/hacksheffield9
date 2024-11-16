@@ -1,36 +1,53 @@
-// import About from '@/app/ui/about';
+// app/page.tsx
+"use client";  // Need to use client for useRouter navigation
 
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
-// export default function Page() {
-//   return (
-//     <main className="flex min-h-screen flex-col p-6 items-center bg-green-300">
-//       <About />
+const HomePage = () => {
+  const [roomCode, setRoomCode] = useState("");
+  const router = useRouter();
 
-//       <h1 className="text-4xl font-bold">Growth</h1>
-//       <div className="bg-green-500 outline outline-4 outline-black p-4 mt-4">
-//         <h2>Enter room code:</h2>
-//         <p>
-//           <input type="text" className="border border-gray-300 rounded p-2 mr-2" />
-//           <button className="bg-blue-500 text-white px-4 py-2 rounded">Join</button>
-//         </p>
-//       </div>
-//     </main>
-//   );
-// }
+  // assuming rn the code has to be 5 chars long (like burkes mockups)
+  const handleJoin = () => {
+    if (roomCode.length === 5) {
+      // Store the room code in session storage or pass via query
+      sessionStorage.setItem("roomCode", roomCode);
+      router.push("/enter-name"); // Redirect to the name input page
+    } else {
+      alert("Please enter a valid 5-digit room code."); // change to in page error later
+    }
+  };
 
-import Conversation from '@/components/Conversation'
-
-import React from 'react'
-import About from '../components/about'
-
-type Props = {}
-
-const HomePage = (props: Props) => {
   return (
-  <>
-    <About />
-    <Conversation />
-  </>
-)}
+    <main className="flex min-h-screen flex-col p-6 items-center justify-center space-y-2">
+      <h1 className="text-4xl font-bold">Growth!</h1>
+      <p className="text-lg">Enter a room code or create a new room :D</p>
 
-export default HomePage
+      {/* Input for room code */}
+      <div className="flex gap-1">
+        <input
+          type="text"
+          className="border border-gray-300 rounded p-2 mr-2"
+          maxLength={5}
+          value={roomCode}
+          onChange={(e) => setRoomCode(e.target.value)}
+        />
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={handleJoin}
+        >
+          Join
+        </button>
+      </div>
+
+
+      {/* TODO Button to create a new game */}
+      <button className="bg-blue-500 text-white px-4 py-2 rounded">
+        Create Game (TODO)
+      </button>
+    </main>
+  );
+};
+
+export default HomePage;
