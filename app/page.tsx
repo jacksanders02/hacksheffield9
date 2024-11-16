@@ -21,11 +21,16 @@
 import Conversation from '@/app/components/Conversation'
 
 import React from 'react'
+import About from './ui/about'
 
 type Props = {}
 
 const HomePage = (props: Props) => {
-  return (<Conversation />)
-}
+  return (
+  <>
+    <About />
+    <Conversation />
+  </>
+)}
 
 export default HomePage
