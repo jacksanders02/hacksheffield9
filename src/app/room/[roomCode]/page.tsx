@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Conversation from "@/components/Conversation"; // Make sure this import is correct
+import Conversation from "@/components/Conversation";
 
 type RoomPageProps = {
   params: {
@@ -12,29 +12,27 @@ type RoomPageProps = {
 
 const RoomPage = ({ params }: RoomPageProps) => {
   const [username, setUsername] = useState("");
-  // we need to await roomCode from the params
-  const { roomCode } = params;
+  const { roomCode } = params; // Extract roomCode from params
   const router = useRouter();
 
   useEffect(() => {
-    // Access sessionStorage only in the client-side environment
-    const storedUsername = sessionStorage.getItem("username");
-
-    if (storedUsername) {
-      setUsername(storedUsername); // Set username from session storage
-    } else {
-      // If no username in sessionStorage, you could redirect or handle accordingly
-      router.push("/enter-name"); // For example, redirecting to an 'Enter Name' page
+    if (typeof window !== "undefined") {
+      const storedUsername = sessionStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      } else {
+        router.push("/enter-name");
+      }
     }
   }, [router]);
 
   return (
-    <div>
+    <main>
       <h1>Room: {roomCode}</h1>
       <p>Username: {username}</p>
       {/* Pass roomCode and username as props to Conversation component */}
       <Conversation username={username} roomCode={roomCode} />
-    </div>
+    </main>
   );
 };
 
