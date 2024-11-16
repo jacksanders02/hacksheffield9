@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Conversation from "@/components/Conversation";
+import { BarBackground } from "@/components/barBackground";
 
 const RoomPage = () => {
   const [username, setUsername] = useState("");
@@ -24,12 +25,13 @@ const RoomPage = () => {
   }, [router]);
 
   return (
-    <main>
-      <h1>Room: {roomCode}</h1>
-      <p>Username: {username}</p>
-      {/* Pass roomCode and username as props to Conversation component */}
-      <Conversation username={username} roomCode={roomCode} />
-    </main>
+    <>
+        <BarBackground />
+        <h1>Room: {roomCode}</h1>
+        <p>Username: {username}</p>
+        {/* Pass roomCode and username as props to Conversation component */}
+        <Conversation username={username} roomCode={roomCode} />
+    </>
   );
 };
 

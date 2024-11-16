@@ -32,25 +32,25 @@ const EnterNamePage = () => {
   }, [router, username]);
 
   return (
-    <main className="flex min-h-screen flex-col p-6 items-center justify-center space-y-2">
-      <h1 className="text-4xl font-bold">Enter Your Name</h1>
-      <p className="text-lg">Please enter your username to join the room.</p>
-      <BarBackground />
-      <div className="flex gap-1">
-        <input
-          type="text"
-          className="border border-gray-300 rounded p-2 mr-2"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          ref={enterNameBtnRef}
-        >
-          Submit
-        </button>
-      </div>
-    </main>
+    <>
+        <BarBackground />
+        <h1 className="text-4xl font-bold">Enter Your Name</h1>
+        <p className="text-lg">Please enter your username to join the room.</p>
+        <div className="flex gap-1">
+            <input
+            type="text"
+            className="border border-gray-300 rounded p-2 mr-2"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            />
+            <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            ref={enterNameBtnRef}
+            >
+            Submit
+            </button>
+        </div>
+    </>
   );
 };
 

@@ -23,7 +23,6 @@ const HomePage = () => {
     
     <>
       <BarBackground />
-
       <div className="mb-1 z-10">
         <img src="growth_logo.png" alt="Growth Logo" className="h-[320px] max-w-full px-5 object-contain" />
       </div>
