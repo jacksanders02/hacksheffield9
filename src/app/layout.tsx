@@ -9,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-gitBackground">
       <body className={jersey_25.className}>
         <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
           {children}
