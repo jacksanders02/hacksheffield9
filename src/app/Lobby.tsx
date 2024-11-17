@@ -1,37 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {usePathname, useRouter} from "next/navigation";
+import React from "react";
 import {BarBackground} from "@/components/barBackground";
 import {Judge} from "@/components/Judge";
 
 export default function Lobby({
+  username,
   nextRound
 }: {
+  username: string;
   nextRound: () => void
 }) {
-  const [username, setUsername] = useState("");
-
-  const roomCode = usePathname().replace("/room/", ""); // remove room/... from the path
-
-  const router = useRouter();
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedUsername = sessionStorage.getItem("username");
-
-      if (storedUsername) {
-        setUsername(storedUsername);
-      } else {
-        router.push("/enter-name");
-      }
-    }
-  }, [router]);
-
   return (
     <>
       <div className="relative min-h-[100dvh] overflow-hidden">
         <BarBackground/>
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between">
-          <h1 className="text-4xl text-white text-shadow-effect">room id: {roomCode}</h1>
           <button
             onClick={nextRound}
             className="bg-gray-900 text-white text-4xl px-4 py-2"
@@ -61,13 +43,6 @@ export default function Lobby({
               <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png" alt="good connection"/>
               {username}
             </div>
-            {/*{members.map((member) => (*/}
-            {/*  <div key={member.username}*/}
-            {/*       className="text-white text-shadow-effect text-3xl flex items-center justify-center">*/}
-            {/*    <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png" alt="good connection"/>*/}
-            {/*    {member.username} {member.ready ? " (Ready)" : ""}*/}
-            {/*  </div>*/}
-            {/*))}*/}
           </div>
         </div>
       </div>

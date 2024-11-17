@@ -33,25 +33,26 @@ const judges = [
   "sue"
 ]
 
-const judgeProperNames = {
-  "countess": "Countess of Crookes",
-  "brian": "Dave O' Pub",
-  "child": "Tiny Tim",
-  "sue": "Sue-Stainability",
-}
+const judgeProperNames = [
+  "Countess of Crookes",
+  "Dave O' Pub",
+  "Tiny Tim",
+  "Sue-Stainability",
+]
 
 export default function QuestionTime({
+  username,
   score,
   addScore,
   roundNumber,
   nextRound
 }: {
+  username: string;
   score: number;
   addScore: (newScore: number) => void;
   roundNumber: number;
   nextRound: () => void;
 }){
-  const [roomCode, setRoomCode] = useState("");
   const [judge, setJudge] = useState(0);
   const [theme, setTheme] = useState("loading...");
   const [time, setTime] = useState(0);
@@ -88,16 +89,7 @@ export default function QuestionTime({
   }
 
   useEffect(() => {
-    const localRoomCode = sessionStorage.getItem("roomCode"); // Retrieve room code from session storage
-
-    if (localRoomCode === null) {
-      router.push("/");
-      return;
-    }
-
-    setRoomCode(localRoomCode);
-
-    fetch(`/api/get-theme?roomCode=presence-${localRoomCode}`)
+    fetch(`/api/get-theme?roomCode=00000`)
     .then(res => res.text())
       .then(setTheme)
 
@@ -171,7 +163,7 @@ export default function QuestionTime({
                 <div className="user-status">
                   <div className="text-white text-shadow-effect text-3xl flex items-center justify-start">
                     <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png"/>
-                    You
+                    {username}
                   </div>
                   <div className="text-4xl text-yellow-500 text-shadow-effect pl-[28px]">£{score}</div>
                 </div>
@@ -182,7 +174,7 @@ export default function QuestionTime({
                 <div className="p-4 w-full max-w-[600px]">
                   <div className="speech-bubble sm:min-h-[500px] p-4 bg-white speech-box flex flex-col">
                     <div className="text-base sm:text-2xl flex-grow">
-                      {capitalizeFirstLetter(judges[judge])} says... {judgement}
+                      {judgeProperNames[judge]} says... {judgement}
                     </div>
                     <div className="flex flex-row justify-between items-center">
                       <img src={`/characters/${judges[judge]}.png`} className="h-[60px] sm:h-[120px]"/>
@@ -195,7 +187,7 @@ export default function QuestionTime({
               <div className="user-prompt p-8 hidden lg:block xl:mr-auto">
                 <img src="/clipboard.png" className="mx-auto -m-4 block h-[56px]"/>
                 <div className="clipboard-border w-[300px] p-4 h-96 text-2xl text-center">
-                  <span>your business plan</span>
+                  <span>{username}&#39;s business plan</span>
                   <hr className="bg-[#606384] h-[3px] my-2"/>
                   {response}
                 </div>

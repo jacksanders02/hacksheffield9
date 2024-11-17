@@ -5,7 +5,7 @@ export async function POST(request: NextRequest): Promise<Response> {
   const requestBody = await request.json();
   const { username, roomCode } = requestBody;
 
-  const url = `${process.env.PYTHON_BACKEND_URL}/room/presence-${roomCode}/user/${username}`;
+  const url = `${process.env.PYTHON_BACKEND_URL}/room/${roomCode}/user/${username}`;
 
   fetch(url, {
     method: "POST",

@@ -1,31 +1,10 @@
-// app/enter-name/page.tsx
 "use client";  // Explicitly mark this as a Client Component
 
-import React, {useState, useEffect} from "react";
-import { useRouter } from "next/navigation";
+import React, {useState} from "react";
 import { BarBackground } from "@/components/barBackground";
 
-const EnterNamePage = () => {
+const EnterNamePage = ({ enterName }: { enterName: (username: string) => void }) => {
   const [username, setUsername] = useState("");
-  const [roomCode, setRoomCode] = useState("");
-  const router = useRouter();
-
-  useEffect(() => {
-    const roomCode = sessionStorage.getItem("roomCode");  // Retrieve room code from session storage
-
-    if (roomCode === null) {
-      router.push("/");
-      return;
-    }
-
-    setRoomCode(roomCode);
-  }, []);
-
-  useEffect(() => {
-    if (username !== null && username.trim()) {
-      sessionStorage.setItem("username", username);  // Store the username in session storage
-    }
-  }, [username]);
 
   const joinRoom = () => {
     // Button sound effect
@@ -34,16 +13,16 @@ const EnterNamePage = () => {
     audioButtonInstance.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
-    
-    if (roomCode !== null && roomCode.trim() && username !== null && username.trim()) {
+
+    if (username !== null && username.trim()) {
       fetch('/api/join-room', {
         method: "POST",
         body: JSON.stringify({
-          roomCode: roomCode,
+          roomCode: "00000",
           username: username,
         }),
       }).then(() => {
-        router.push(`/room/${roomCode}`);  // Redirect to the room page
+        enterName(username);
       })
     } else {
       alert("enter username");
@@ -56,20 +35,20 @@ const EnterNamePage = () => {
         <BarBackground />
         <h1 className="text-4xl text-white text-shadow-effect mb-11">what should we call you?</h1>
         <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
-            <input
+          <input
             type="text"
             className="p-2 mr-2 text-4xl w-full"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="your name"
             spellCheck={false}
-            />
-            <button
+          />
+          <button
             className="bg-gray-900 text-white text-4xl px-4 py-2"
             onClick={joinRoom}
-            >
+          >
             submit
-            </button>
+          </button>
         </div>
       </div>
     </>

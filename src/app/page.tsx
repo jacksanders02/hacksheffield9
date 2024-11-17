@@ -1,94 +1,65 @@
-"use client"; // Ensure client-side rendering
+"use client";
+import React, {useState} from "react";
+import QuestionTime from "@/app/QuestionTime";
+import Lobby from "@/app/Lobby";
+import Leaderboard from "@/app/Leaderboard";
+import EnterNamePage from "@/app/EnterName";
 
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { BarBackground } from "@/components/barBackground";
-import Link from "next/link";
+const RoomPage: React.FC = () => {
+  const [round, setRound] = useState(0);
+  const [score, setScore] = useState(0);
+  const [username, setUsername] = useState("");
+  const audioButtonInstance = new Audio("../soundtracks/button.mp3");
 
-let audioInstance: HTMLAudioElement | null = null; // Global variable to track the audio instance
-
-const HomePage = () => {
-  const [roomCode, setRoomCode] = useState<string>(""); // Room code as string
-  const router = useRouter();
-
-  const handleJoin = () => {
-    // Button sound effect
-    const audioButtonInstance = new Audio("soundtracks/button.mp3");
+  const advanceRound = () => {
     document.querySelectorAll('audio').forEach(el => el.pause());
     audioButtonInstance.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
-    
-    if (roomCode.length === 5) {
-      // Store the room code in session storage or pass via query
-      sessionStorage.setItem("roomCode", roomCode);
-      router.push("/enter-name"); // Redirect to the name input page
 
-      // Check if an audio instance already exists
-      if (!audioInstance) {
-        audioInstance = new Audio("soundtracks/loading_menu.mp3");
-        audioInstance.loop = true;
-
-        // Play audio and handle any play errors
-        audioInstance.addEventListener("canplaythrough", () => {
-          audioInstance?.play().catch((error) => {
-            console.error("Audio playback error:", error);
-          });
-        });
+    fetch(`/api/advance-round?roomCode=00000`).then(res => {
+      if (res.status !== 200){
+        throw new Error("no")
       }
-    } else {
-      alert("Please enter a valid 5-digit room code.");
-    }
-  };
+      return res.text();
+    }).then(data => setRound(parseInt(data)));
+  }
+
+  if (!username || !username.trim()) {
+    return (
+      <EnterNamePage enterName={setUsername} />
+    )
+  }
 
   return (
     <>
-      <div className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden">
-        <BarBackground />
-        <div className="mb-1">
-          <img
-            src="growth_logo.png"
-            alt="Growth Logo"
-            className="h-[320px] max-w-full px-5 object-contain"
-          />
-        </div>
+      {(round === 0) && (
+        <Lobby
+          username={username}
+          nextRound={advanceRound}
+        />
+      )}
 
-        {/* Input for room code */}
-        {/* <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
-          <input
-            type="text"
-            className="p-2 mr-2 text-4xl w-full"
-            maxLength={5}
-            value={roomCode}
-            onChange={(e) => setRoomCode(e.target.value)}
-            placeholder="room code"
-            spellCheck={false}
-          />
-          <button
-            className="bg-gray-900 text-white text-4xl px-4 py-2"
-            onClick={handleJoin}
-          >
-            join
-          </button>
-        </div>
-        <p className="text-3xl text-white text-shadow-effect">or</p> */}
-        <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
-          <button className="bg-gray-900 text-white text-4xl px-4 py-2 w-full">
-            start game
-          </button>
-        </div>
-        <div className="mt-11 mb-11"> 
-          <Link href ="https://hs9.devpost.com/">
-            <img
-              src="hacksheffield_logo.png"
-              alt="Made for Hacksheffield9"
-              className="h-[45px] w-auto"
-            />
-          </Link>
-        </div>
-      </div>
+      {(round > 0 && round < 6) && (
+        <QuestionTime
+          username={username}
+          score={score}
+          addScore={(newScore: number) => setScore(score + newScore)}
+          roundNumber={round}
+          nextRound={advanceRound}
+        />
+      )}
+
+      {(round < 0) && (
+        <Leaderboard
+          players={[{
+            username: "You!",
+            score: score,
+          }]}
+        />
+      )}
     </>
-  );
+  )
 };
 
-export default HomePage;
+export default RoomPage;
