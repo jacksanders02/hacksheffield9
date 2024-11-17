@@ -1,11 +1,11 @@
 "use client";
-
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { BarBackground } from "@/components/barBackground";
 import { pusherClient } from "@/lib/pusher";
 import {Channel} from "pusher-js";
-import { Judge } from "@/components/Judge";
+import QuestionTime from "@/app/room/[roomCode]/QuestionTime";
+import Lobby from "@/app/room/[roomCode]/Lobby";
+import Leaderboard from "@/app/room/[roomCode]/Leaderboard";
 
 // Define the shape of the Member object
 interface Member {
@@ -31,28 +31,18 @@ const RoomPage: React.FC = () => {
   const [roomReady, setRoomReady] = useState<boolean>(false);
   const [username, setUsername] = useState<string>();
   const [channel, setChannel] = useState<Channel>();
+  const [round, setRound] = useState(0);
+  const [score, setScore] = useState(0);
 
   const roomCode = usePathname().replace("/room/", ""); // Extract roomCode from the path
-  const router = useRouter();
 
-  const startListener = () => {
-    if (!username || !channel) {
-      return;
-    }
-
-    fetch(`/api/ready-up?username=${username}&roomCode=presence-${roomCode}`, {
-      method: "POST",
-    }).then(r => {
-      if (r.status !== 200) {
-        throw new Error("Could not ready up :(");
+  const advanceRound = () => {
+    fetch(`/api/advance-round?roomCode=presence-${roomCode}`).then(res => {
+      if (res.status !== 200){
+        throw new Error("no")
       }
-
-      return r.json();
-    }).then(data => {
-      setReady(data);
-      channel.trigger('client-member_ready', { memberUsername: username, readyStatus: data });
-      members.find((member) => member.username === username)!.ready = data;
-    });
+      return res.text();
+    }).then(data => setRound(parseInt(data)));
   }
 
   useEffect(() => {
@@ -155,8 +145,31 @@ const RoomPage: React.FC = () => {
           </div>
         </div>
       </div>
+      {(round === 0) && (
+        <Lobby
+          nextRound={advanceRound}
+        />
+      )}
+
+      {(round > 0 && round < 6) && (
+        <QuestionTime
+          score={score}
+          addScore={(newScore: number) => setScore(score + newScore)}
+          roundNumber={round}
+          nextRound={advanceRound}
+        />
+      )}
+
+      {(round < 0) && (
+        <Leaderboard
+          players={[{
+            username: "You!",
+            score: score,
+          }]}
+        />
+      )}
     </>
-  );
+  )
 };
 
 export default RoomPage;

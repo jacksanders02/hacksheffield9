@@ -13,6 +13,12 @@ const HomePage = () => {
 
   const handleJoin = () => {
     if (roomCode.length === 5) {
+      // Button sound effect
+      const audioButtonInstance = new Audio("soundtracks/button.mp3");
+      audioButtonInstance.play().catch((error) => {
+        console.error("Audio playback error:", error);
+      });
+
       // Store the room code in session storage or pass via query
       sessionStorage.setItem("roomCode", roomCode);
       router.push("/enter-name"); // Redirect to the name input page

@@ -69,7 +69,7 @@ const EnterNamePage = () => {
           </div>
 
           <div className="user-prompt p-8 hidden lg:block xl:mr-auto">
-            <img src="/clipboard.svg" className="mx-auto -m-4 block h-[56px]"/>
+            <img src="/clipboard.png" className="mx-auto -m-4 block h-[56px]"/>
             <div className="clipboard-border w-[300px] p-4 h-96 text-2xl text-center">
               <span>jack b business plan</span>
               <hr className="bg-[#606384] h-[3px] my-2" />
