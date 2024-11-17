@@ -33,10 +33,16 @@ const RoomPage: React.FC = () => {
   const [channel, setChannel] = useState<Channel>();
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
+  const audioButtonInstance = new Audio("../soundtracks/button.mp3");
 
   const roomCode = usePathname().replace("/room/", ""); // Extract roomCode from the path
 
   const advanceRound = () => {
+    document.querySelectorAll('audio').forEach(el => el.pause());
+    audioButtonInstance.play().catch((error) => {
+      console.error("Audio playback error:", error);
+    });
+
     fetch(`/api/advance-round?roomCode=presence-${roomCode}`).then(res => {
       if (res.status !== 200){
         throw new Error("no")
@@ -110,16 +116,6 @@ const RoomPage: React.FC = () => {
       pusherClient.unsubscribe(`presence-${roomCode}`);
     };
   }, [roomCode]);
-
-  const handleStartClick = () => {
-    // Button sound effect
-    const audioButtonInstance = new Audio("../soundtracks/button.mp3");
-    audioButtonInstance.play().catch((error) => {
-      console.error("Audio playback error:", error);
-    });
-
-    router.push("/results"); // navigate to /results
-  };
 
   return (
     <>

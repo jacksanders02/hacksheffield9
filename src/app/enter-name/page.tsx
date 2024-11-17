@@ -30,6 +30,7 @@ const EnterNamePage = () => {
   const joinRoom = () => {
     // Button sound effect
     const audioButtonInstance = new Audio("soundtracks/button.mp3");
+    document.querySelectorAll('audio').forEach(el => el.pause());
     audioButtonInstance.play().catch((error) => {
       console.error("Audio playback error:", error);
     });

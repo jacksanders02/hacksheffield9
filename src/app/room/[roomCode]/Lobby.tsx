@@ -46,7 +46,7 @@ export default function Lobby({
                    imgLink="countess.png"/>
             <Judge name="Sue Stainability"
                    description="Cares about sustainability and inclusivity in business solutions"
-                   imgLink="sustainability.png"/>
+                   imgLink="sue.png"/>
             <Judge name="Dave O' Pub"
                    description="Always drunk, enjoys the pub, and gives honest opinions on business ideas"
                    imgLink="dave.png"/>
