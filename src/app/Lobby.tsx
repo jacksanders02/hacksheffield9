@@ -13,7 +13,7 @@ export default function Lobby({
     <>
       <div className="relative min-h-[100dvh] overflow-hidden">
         <BarBackground/>
-        <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between">
+        <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-end">
           <button
             onClick={nextRound}
             className="bg-gray-900 text-white text-4xl px-4 py-2"
