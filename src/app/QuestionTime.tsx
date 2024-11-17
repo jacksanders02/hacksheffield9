@@ -57,9 +57,28 @@ export default function QuestionTime({
   const [judgement, setJudgement] = useState("");
   const [hiddenScore, setHiddenScore] = useState(0);
   const [response, setResponse] = useState(""); // State for the textarea content
+  const [audio, setAudio] = useState<HTMLAudioElement>();
   const router = useRouter();
 
+  useEffect(() => {
+    setAudio(new Audio("../soundtracks/button.mp3"));
+  }, []);
+
   const submitAnswer = (judge: number) => {
+    if (audio) {
+      if (!audio.oncanplaythrough) {
+        audio.addEventListener("canplaythrough", () => {
+          audio.play().catch((error) => {
+              console.error("Audio playback error:", error);
+            });
+        });
+      }
+      if (audio.readyState >= 4) {
+        audio.play().catch((error) => {
+            console.error("Audio playback error:", error);
+          });
+      }
+    }
     setSubmitted(true);
     fetch('/api/submit-answer', {
       method: "POST",
