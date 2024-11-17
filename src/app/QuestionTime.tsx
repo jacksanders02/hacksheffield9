@@ -6,6 +6,7 @@ interface JudgeAnswer {
   response: string;
   value: string;
   loaded: boolean;
+  moneyAdded: boolean;
 }
 
 function useInterval(callback: () => void, delay: number) {
@@ -60,11 +61,9 @@ export default function QuestionTime({
   const [time, setTime] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [response, setResponse] = useState(""); // State for the textarea content
-  const [audio, setAudio] = useState<HTMLAudioElement>();
   const [moneyAudio, setMoneyAudio] = useState<HTMLAudioElement>();
 
   useEffect(() => {
-    setAudio(new Audio("../soundtracks/button.mp3"));
     setMoneyAudio(new Audio("../soundtracks/gain_money.mp3"));
   }, []);
 
@@ -72,14 +71,12 @@ export default function QuestionTime({
     response: "",
     value: "",
     loaded: false,
+    moneyAdded: false,
   }));
   const [answers, setAnswers] = useState<JudgeAnswer[]>(baseArray);
   const router = useRouter();
 
   const submitAnswer = (inferenceJudge: number) => {
-    audio?.play().catch((error) => {
-      console.error("Audio playback error:", error);
-    });
     setSubmitted(true);
     fetch('/api/submit-answer', {
       method: "POST",
@@ -120,6 +117,7 @@ export default function QuestionTime({
       response: "",
       value: "",
       loaded: false,
+      moneyAdded: false,
     }));
     setAnswers(baseArray);
     setJudge(0)
@@ -127,10 +125,11 @@ export default function QuestionTime({
   }, [roundNumber, router]);
 
   useEffect(() => {
-    if (answers[judge].loaded) {
-      addScore(parseInt(answers[judge].value));
+    if (answers[judge].loaded && !answers[judge].moneyAdded) {
+      addScore(parseInt(answers[judge].value))
+      answers[judge].moneyAdded = true;
     }
-  }, [judge, answers]);
+  }, [answers, judge]);
 
   useInterval(() => {
     setTime(time + 100);
