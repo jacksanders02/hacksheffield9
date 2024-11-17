@@ -39,22 +39,29 @@ const RoomPage = () => {
           <div className="flex flex-row space-x-5">
 
             <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/trump.png" />
-              <p className="text-white text-shadow-effect text-3xl">Mr Business</p>
+              <img className="h-[200px] max-w-full object-contain" src="/characters/countess.png" />
+              <p className="text-white text-shadow-effect text-3xl">Countess Crookes</p>
               <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
                 Ruthless and unethical capitalist
               </p>
             </div>
             <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/trump.png" />
-              <p className="text-white text-shadow-effect text-3xl">Mr Business</p>
+              <img className="h-[200px] max-w-full object-contain" src="/characters/sustainability.png" />
+              <p className="text-white text-shadow-effect text-3xl">Sue Stainability</p>
               <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
                 Ruthless and unethical capitalist, will make a quid wherever they can.
               </p>
             </div>
             <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/trump.png" />
-              <p className="text-white text-shadow-effect text-3xl">Mr Business</p>
+              <img className="h-[200px] max-w-full object-contain" src="/characters/dave.png" />
+              <p className="text-white text-shadow-effect text-3xl">Dave</p>
+              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
+                Ruthless and unethical capitalist
+              </p>
+            </div>
+            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
+              <img className="h-[200px] max-w-full object-contain" src="/characters/child.png" />
+              <p className="text-white text-shadow-effect text-3xl">Tiny Tim</p>
               <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
                 Ruthless and unethical capitalist
               </p>
