@@ -50,7 +50,7 @@ const RoomPage: React.FC = () => {
       return r.json();
     }).then(data => {
       setReady(data);
-      channel.trigger('client-member_ready', { username, readyStatus: data });
+      channel.trigger('client-member_ready', { memberUsername: username, readyStatus: data });
       members.find((member) => member.username === username)!.ready = data;
     });
   }
@@ -97,11 +97,11 @@ const RoomPage: React.FC = () => {
     });
 
     // Listen for ready event
-    channel.bind("client-member_ready", ({ username, readyStatus }: {
-      username: string;
+    channel.bind("client-member_ready", ({ memberUsername, readyStatus }: {
+      memberUsername: string;
       readyStatus: boolean;
     }) => {
-      members.find((member) => member.username === username)!.ready = readyStatus;
+      members.find((member) => member.username === memberUsername)!.ready = readyStatus;
     });
 
     const username = sessionStorage.getItem("username");
