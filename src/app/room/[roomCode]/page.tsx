@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BarBackground } from "@/components/barBackground";
-import QuestionForm from "@/components/QuestionForm";
 import { pusherClient } from "@/lib/pusher";
 
 // Define the shape of the Member object
@@ -20,7 +19,6 @@ interface Members {
 }
 
 const RoomPage: React.FC = () => {
-  const [username, setUsername] = useState<string>("");
   const [members, setMembers] = useState<string[]>([]);
   const [ready, setReady] = useState<boolean>(false);
 
