@@ -22,12 +22,18 @@ const EnterNamePage = ({ enterName }: { enterName: (username: string) => void })
 
     if (music) {
       music.loop = true;
-      // Play audio and handle any play errors
-      music.addEventListener("canplaythrough", () => {
-        music?.play().catch((error) => {
-          console.error("Audio playback error:", error);
+      if (!music.oncanplaythrough) {
+        music.addEventListener("canplaythrough", () => {
+          music.play().catch((error) => {
+              console.error("Audio playback error:", error);
+            });
         });
-      });
+      }
+      if (music.readyState >= 4) {
+        music.play().catch((error) => {
+            console.error("Audio playback error:", error);
+          });
+      }
     }
 
     if (username !== null && username.trim()) {
