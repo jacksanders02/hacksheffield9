@@ -1,5 +1,4 @@
 import React, {useEffect, useRef, useState} from "react";
-import { useRouter} from "next/navigation";
 import {BarBackground} from "@/components/barBackground";
 
 interface JudgeAnswer {
@@ -74,7 +73,6 @@ export default function QuestionTime({
     moneyAdded: false,
   }));
   const [answers, setAnswers] = useState<JudgeAnswer[]>(baseArray);
-  const router = useRouter();
 
   const submitAnswer = (inferenceJudge: number) => {
     setSubmitted(true);
@@ -119,7 +117,7 @@ export default function QuestionTime({
     setAnswers(baseArray);
     setJudge(0)
     setResponse("")
-  }, [roundNumber, router]);
+  }, [roundNumber]);
 
   useEffect(() => {
     if (answers[judge].loaded && !answers[judge].moneyAdded) {

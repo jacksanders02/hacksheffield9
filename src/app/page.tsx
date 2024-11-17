@@ -43,7 +43,7 @@ const RoomPage: React.FC = () => {
         />
       )}
 
-      {(round > 0 && round < 6) && (
+      {(round > 0) && (
         <QuestionTime
           username={username}
           score={score}
