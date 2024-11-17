@@ -1,5 +1,4 @@
 import {NextRequest} from "next/server";
-import {addUser, userReady} from "@/lib/gameLoop";
 
 export async function POST(request: NextRequest): Promise<Response> {
   const requestBody = await request.json();
@@ -16,8 +15,6 @@ export async function POST(request: NextRequest): Promise<Response> {
       console.log("User joined");
     }
   })
-
-  addUser(username, roomCode);
 
   return new Response(null, { status: 200 });
 }

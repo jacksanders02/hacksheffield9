@@ -1,13 +1,9 @@
-function capitalizeFirstLetter(val: String) {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-}
-
-import React, {useEffect, useReducer, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useRouter} from "next/navigation";
 import {BarBackground} from "@/components/barBackground";
 
-function useInterval(callback: () => any, delay: number) {
-  const savedCallback = useRef<() => any>(() => {});
+function useInterval(callback: () => void, delay: number) {
+  const savedCallback = useRef<() => void>(() => {});
 
   // Remember the latest callback.
   useEffect(() => {
@@ -20,7 +16,7 @@ function useInterval(callback: () => any, delay: number) {
       savedCallback.current();
     }
     if (delay !== null) {
-      let id = setInterval(tick, delay);
+      const id = setInterval(tick, delay);
       return () => clearInterval(id);
     }
   }, [delay]);
