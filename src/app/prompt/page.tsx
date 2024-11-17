@@ -27,10 +27,10 @@ const EnterNamePage = () => {
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden flex flex-col">
+      <div className="relative min-h-[100dvh] overflow-hidden flex flex-col">
         <BarBackground />
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between min-h-[96px]">
-          <h1 className="text-4xl text-white text-shadow-effect">prompt: a bank for bears</h1>
+          <h1 className="text-4xl text-white text-shadow-effect">prompt: a bank for bears das dsa dsasda </h1>
         </div>
         {/* Progress bar placed below the header with transparent background and white bar */}
         <div className="w-full h-1 bg-transparent overflow-hidden">
@@ -59,7 +59,7 @@ const EnterNamePage = () => {
           <button
           className="bg-gray-900 text-white text-4xl px-4 py-2"
           >
-          Submit
+          submit
           </button>
         </div>
       </div>

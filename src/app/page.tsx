@@ -12,12 +12,6 @@ const HomePage = () => {
 
   const handleJoin = () => {
     if (roomCode.length === 5) {
-      // Button sound effect
-      const audioButtonInstance = new Audio("soundtracks/button.mp3");
-      audioButtonInstance.play().catch((error) => {
-        console.error("Audio playback error:", error);
-      });
-
       // Store the room code in session storage or pass via query
       sessionStorage.setItem("roomCode", roomCode);
       router.push("/enter-name"); // Redirect to the name input page
@@ -41,7 +35,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden">
         <BarBackground />
         <div className="mb-1">
           <img
@@ -52,27 +46,27 @@ const HomePage = () => {
         </div>
 
         {/* Input for room code */}
-        <div className="flex gap-1 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+        <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           <input
             type="text"
             className="p-2 mr-2 text-4xl w-full"
             maxLength={5}
             value={roomCode}
             onChange={(e) => setRoomCode(e.target.value)}
-            placeholder="Enter room code"
+            placeholder="room code"
             spellCheck={false}
           />
           <button
             className="bg-gray-900 text-white text-4xl px-4 py-2"
             onClick={handleJoin}
           >
-            Join
+            join
           </button>
         </div>
         <p className="text-3xl text-white text-shadow-effect">or</p>
-        <div className="flex gap-1 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+        <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           <button className="bg-gray-900 text-white text-4xl px-4 py-2 w-full">
-            Create Game (TODO)
+            create game (TODO)
           </button>
         </div>
         <div className="mt-11 mb-11">

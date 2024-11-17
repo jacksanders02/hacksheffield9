@@ -22,14 +22,14 @@ const EnterNamePage = () => {
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative min-h-[100dvh] overflow-hidden">
         <BarBackground />
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between min-h-[96px]">
-          <h1 className="text-4xl text-white text-shadow-effect">prompt: a bank for bears</h1>
+          <h1 className="text-4xl text-white text-shadow-effect">prompt: a bank for bears dadsas das dsadsa</h1>
         </div>
         <div className="flex flex-row w-full">
           {/* Absolute positioning for user-status-list */}
-          <div className="user-status-list absolute top-26 left-0 p-4 z-10">
+          <div className="user-status-list absolute top-26 left-0 p-4 z-10 opacity-70 sm:opacity-100">
             <div className="user-status">
               <div className="text-white text-shadow-effect text-3xl flex items-center justify-start">
                 <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png" />
@@ -54,10 +54,10 @@ const EnterNamePage = () => {
           </div>
 
           {/* Judge Output */}
-          <div className="judge-output ml-32 p-4 z-0 sm:ml-32 md:ml-32 lg:ml-36 xl:ml-auto">
+          <div className="judge-output ml-2 p-4 z-0 sm:ml-32 md:ml-32 lg:ml-36 xl:ml-auto">
             <div className="p-4 w-full max-w-[600px]">
-              <div className="speech-bubble min-h-[500px] p-4 bg-white speech-box flex flex-col">
-                <div className="text-2xl flex-grow">
+              <div className="speech-bubble sm:min-h-[500px] p-4 bg-white speech-box flex flex-col">
+                <div className="text-l sm:text-2xl flex-grow">
                   Countess of Crookes says... A most chilling proposition indeed! Were I to helm a bank for polar bears, I’d ensure their paw-sessions are safe by introducing ice vaults, while every igloo would have access to a local branch. An Arctic Gold savings plan would be essential, with fish-backed bonds and snow equity investments. Naturally, we'd also launch the Bear Necessities Rewards Program—because even polar bears deserve a frost-class financial experience!
                 </div>
                 <div className="flex flex-row justify-between items-center">

@@ -51,23 +51,23 @@ const EnterNamePage = () => {
 
   return (
     <>
-      <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden">
         <BarBackground />
-        <h1 className="text-4xl text-white text-shadow-effect mb-11">Enter Your Name</h1>
-        <div className="flex gap-1 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+        <h1 className="text-4xl text-white text-shadow-effect mb-11">what should we call you?</h1>
+        <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
             <input
             type="text"
             className="p-2 mr-2 text-4xl w-full"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Your name"
+            placeholder="your name"
             spellCheck={false}
             />
             <button
             className="bg-gray-900 text-white text-4xl px-4 py-2"
             onClick={joinRoom}
             >
-            Submit
+            submit
             </button>
         </div>
       </div>

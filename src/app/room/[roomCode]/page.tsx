@@ -30,7 +30,7 @@ const RoomPage = () => {
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative min-h-[100dvh] overflow-hidden">
         <BarBackground />
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between">
           <h1 className="text-4xl text-white text-shadow-effect">room id: {roomCode}</h1>
@@ -43,42 +43,60 @@ const RoomPage = () => {
         </div>
         <div className="p-5 pb-0">
           <h1 className="text-4xl text-white text-shadow-effect">meet your judges</h1>
-          <div className="flex flex-row space-x-5">
-
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/countess.png" />
+          <div className="grid grid-cols-3">
+            <div className="judge-box flex flex-col items-center text-center flex-1">
+              <img
+                className="w-[150px] h-[200px] object-contain"
+                src="/characters/countess.png"
+                alt="Countess Crookes"
+              />
               <p className="text-white text-shadow-effect text-3xl">Countess Crookes</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
+              <p className="text-white text-shadow-effect text-lg break-words px-2 hidden sm:block">
                 Professional and successful entrepreneur with expert knowledge
               </p>
             </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/sustainability.png" />
+
+            <div className="judge-box flex flex-col items-center text-center">
+              <img
+                className="w-[150px] h-[200px] object-contain"
+                src="/characters/sustainability.png"
+                alt="Sue Stainability"
+              />
               <p className="text-white text-shadow-effect text-3xl">Sue Stainability</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
+              <p className="text-white text-shadow-effect text-lg break-words px-2 hidden sm:block">
                 Cares about sustainability and inclusivity in business solutions
               </p>
             </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/dave.png" />
+
+            <div className="judge-box flex flex-col items-center text-center">
+              <img
+                className="w-[150px] h-[200px] object-contain"
+                src="/characters/dave.png"
+                alt="Dave O' Pub"
+              />
               <p className="text-white text-shadow-effect text-3xl">Dave O' Pub</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
-                Always drunk, enjoys the pub, and gives honest opinions on business ideas 
+              <p className="text-white text-shadow-effect text-lg break-words px-2 hidden sm:block">
+                Always drunk, enjoys the pub, and gives honest opinions on business ideas
               </p>
             </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/child.png" />
+
+            {/* <div className="judge-box flex flex-col items-center text-center max-w-[200px]">
+              <img
+                className="w-[150px] h-[200px] object-contain"
+                src="/characters/child.png"
+                alt="Tiny Tim"
+              />
               <p className="text-white text-shadow-effect text-3xl">Tiny Tim</p>
               <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
                 Very naive and enjoys humour in business solutions
               </p>
-            </div>
-
+            </div> */}
+            
           </div>
         </div>
         <div className="p-5">
           <h1 className="text-4xl text-white text-shadow-effect">players (0)</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center overflow-y-auto">
             <div className="text-white text-shadow-effect text-3xl flex items-center justify-center">
               <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png" />
               jackb
