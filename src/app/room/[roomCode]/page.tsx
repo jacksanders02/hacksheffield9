@@ -25,6 +25,12 @@ const RoomPage = () => {
   }, [router]);
 
   const handleStartClick = () => {
+    // Button sound effect
+    const audioButtonInstance = new Audio("../soundtracks/button.mp3");
+    audioButtonInstance.play().catch((error) => {
+      console.error("Audio playback error:", error);
+    });
+
     router.push("/results"); // navigate to /results
   };
 

@@ -11,6 +11,12 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleJoin = () => {
+    // Button sound effect
+    const audioButtonInstance = new Audio("soundtracks/button.mp3");
+    audioButtonInstance.play().catch((error) => {
+      console.error("Audio playback error:", error);
+    });
+    
     if (roomCode.length === 5) {
       // Store the room code in session storage or pass via query
       sessionStorage.setItem("roomCode", roomCode);
