@@ -24,13 +24,20 @@ const RoomPage = () => {
     }
   }, [router]);
 
+  const handleStartClick = () => {
+    router.push("/results"); // navigate to /results
+  };
+
   return (
     <>
       <div className="relative min-h-screen overflow-hidden">
         <BarBackground />
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between">
           <h1 className="text-4xl text-white text-shadow-effect">room id: {roomCode}</h1>
-          <button className="bg-gray-900 text-white text-4xl px-4 py-2">
+          <button 
+            onClick={handleStartClick} 
+            className="bg-gray-900 text-white text-4xl px-4 py-2"
+          >
             Start
           </button>
         </div>
@@ -55,13 +62,6 @@ const RoomPage = () => {
             <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
               <img className="h-[200px] max-w-full object-contain" src="/characters/dave.png" />
               <p className="text-white text-shadow-effect text-3xl">Dave</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
-                Ruthless and unethical capitalist
-              </p>
-            </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/child.png" />
-              <p className="text-white text-shadow-effect text-3xl">Tiny Tim</p>
               <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
                 Ruthless and unethical capitalist
               </p>
