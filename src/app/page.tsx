@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { BarBackground } from "@/components/barBackground";
+import Link from "next/link";
 
 let audioInstance: HTMLAudioElement | null = null; // Global variable to track the audio instance
 
@@ -75,12 +76,14 @@ const HomePage = () => {
             create game (TODO)
           </button>
         </div>
-        <div className="mt-11 mb-11">
-          <img
-            src="hacksheffield_logo.png"
-            alt="Made for Hacksheffield9"
-            className="h-[45px] w-auto"
-          />
+        <div className="mt-11 mb-11"> 
+          <Link href ="https://hs9.devpost.com/">
+            <img
+              src="hacksheffield_logo.png"
+              alt="Made for Hacksheffield9"
+              className="h-[45px] w-auto"
+            />
+          </Link>
         </div>
       </div>
     </>
