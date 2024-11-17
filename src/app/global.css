@@ -76,3 +76,16 @@ button, textarea, .clipboard-border {
   -moz-box-shadow: 4px 4px 0px 1px rgba(0,0,0,1);
   box-shadow: 4px 4px 0px 1px rgba(0,0,0,1);
 }
+
+.character-float-anim {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

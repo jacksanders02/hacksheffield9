@@ -46,7 +46,7 @@ const RoomPage = () => {
           <div className="grid grid-cols-3">
             <div className="judge-box flex flex-col items-center text-center flex-1">
               <img
-                className="w-[150px] h-[200px] object-contain"
+                className="w-[150px] h-[200px] object-contain character-float-anim"
                 src="/characters/countess.png"
                 alt="Countess Crookes"
               />
@@ -58,7 +58,7 @@ const RoomPage = () => {
 
             <div className="judge-box flex flex-col items-center text-center">
               <img
-                className="w-[150px] h-[200px] object-contain"
+                className="w-[150px] h-[200px] object-contain character-float-anim"
                 src="/characters/sustainability.png"
                 alt="Sue Stainability"
               />
@@ -70,7 +70,7 @@ const RoomPage = () => {
 
             <div className="judge-box flex flex-col items-center text-center">
               <img
-                className="w-[150px] h-[200px] object-contain"
+                className="w-[150px] h-[200px] object-contain character-float-anim"
                 src="/characters/dave.png"
                 alt="Dave O' Pub"
               />
