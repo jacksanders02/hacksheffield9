@@ -140,7 +140,7 @@ const RoomPage: React.FC = () => {
           </div>
         </div>
         <div className="p-5">
-          <h1 className="text-4xl text-white text-shadow-effect">players (0)</h1>
+          <h1 className="text-4xl text-white text-shadow-effect">players ({members.length})</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
             { members.map((member) => (
               <div key={member} className="text-white text-shadow-effect text-3xl flex items-center justify-center">
