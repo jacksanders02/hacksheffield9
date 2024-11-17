@@ -11,7 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-gitBackground">
       <body className={jersey_25.className}>
-        <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+        <main>
           {children}
         </main>
       </body>
