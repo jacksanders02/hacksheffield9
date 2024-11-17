@@ -97,12 +97,18 @@ const RoomPage: React.FC = () => {
     });
 
     // Listen for ready event
-    channel.bind("client-member_ready", ({ memberUsername, readyStatus }: {
-      memberUsername: string;
-      readyStatus: boolean;
-    }) => {
-      members.find((member) => member.username === memberUsername)!.ready = readyStatus;
+    channel.bind("client-member_ready", ({ memberUsername, readyStatus }: { memberUsername: string; readyStatus: boolean }) => {
+      console.log("Member ready: ", memberUsername, readyStatus);
+
+      setMembers((prevMembers) => 
+        prevMembers.map((member) => 
+          member.username === memberUsername
+            ? { ...member, ready: readyStatus } // Update the ready status immutably
+            : member
+        )
+      );
     });
+
 
     const username = sessionStorage.getItem("username");
     if (username === null) {
