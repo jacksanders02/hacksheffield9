@@ -6,9 +6,11 @@ import { BarBackground } from "@/components/barBackground";
 const EnterNamePage = ({ enterName }: { enterName: (username: string) => void }) => {
   const [username, setUsername] = useState("");
   const [audio, setAudio] = useState<HTMLAudioElement>();
+  const [music, setMusic] = useState<HTMLAudioElement>();
 
   useEffect(() => {
     setAudio(new Audio("../soundtracks/button.mp3"));
+    setMusic(new Audio("soundtracks/loading_menu.mp3"));
   }, []);
 
   const joinRoom = () => {
@@ -17,6 +19,16 @@ const EnterNamePage = ({ enterName }: { enterName: (username: string) => void })
     audio?.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
+
+    if (music?.paused) {
+      music.loop = true;
+      // Play audio and handle any play errors
+      music.addEventListener("canplaythrough", () => {
+        music.play().catch((error) => {
+          console.error("Audio playback error:", error);
+        });
+      });
+    }
 
     if (username !== null && username.trim()) {
       fetch('/api/join-room', {
