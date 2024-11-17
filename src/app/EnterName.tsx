@@ -1,16 +1,20 @@
 "use client";  // Explicitly mark this as a Client Component
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { BarBackground } from "@/components/barBackground";
 
 const EnterNamePage = ({ enterName }: { enterName: (username: string) => void }) => {
   const [username, setUsername] = useState("");
+  const [audio, setAudio] = useState<HTMLAudioElement>();
+
+  useEffect(() => {
+    setAudio(new Audio("../soundtracks/button.mp3"));
+  }, []);
 
   const joinRoom = () => {
     // Button sound effect
-    const audioButtonInstance = new Audio("soundtracks/button.mp3");
     document.querySelectorAll('audio').forEach(el => el.pause());
-    audioButtonInstance.play().catch((error) => {
+    audio?.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
 

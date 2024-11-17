@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import QuestionTime from "@/app/QuestionTime";
 import Lobby from "@/app/Lobby";
 import Leaderboard from "@/app/Leaderboard";
@@ -9,11 +9,15 @@ const RoomPage: React.FC = () => {
   const [round, setRound] = useState(0);
   const [score, setScore] = useState(0);
   const [username, setUsername] = useState("");
-  const audioButtonInstance = new Audio("../soundtracks/button.mp3");
+  const [audio, setAudio] = useState<HTMLAudioElement>();
+
+  useEffect(() => {
+    setAudio(new Audio("../soundtracks/button.mp3"));
+  }, []);
 
   const advanceRound = () => {
     document.querySelectorAll('audio').forEach(el => el.pause());
-    audioButtonInstance.play().catch((error) => {
+    audio?.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
 
