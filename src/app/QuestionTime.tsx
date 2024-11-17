@@ -100,9 +100,6 @@ export default function QuestionTime({
   }
 
   const incrementJudge = () => {
-    moneyAudio?.play().catch((error) => {
-      console.error("Audio playback error:", error);
-    });
     setJudge(judge + 1);
   }
 
@@ -126,6 +123,9 @@ export default function QuestionTime({
 
   useEffect(() => {
     if (answers[judge].loaded && !answers[judge].moneyAdded) {
+      moneyAudio?.play().catch((error) => {
+        console.error("Audio playback error:", error);
+      });
       addScore(parseInt(answers[judge].value))
       answers[judge].moneyAdded = true;
     }
