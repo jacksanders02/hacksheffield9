@@ -1,6 +1,6 @@
 {
-  "theme_color": "#E2E2E2",
-  "background_color": "#E2E2E2",
+  "theme_color": "#212121",
+  "background_color": "#212121",
   "icons": [
     { "src": "/icons/favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
     { "src": "/icons/icon_192_maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
