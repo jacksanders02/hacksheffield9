@@ -28,6 +28,12 @@ const EnterNamePage = () => {
   }, [username]);
 
   const joinRoom = () => {
+    // Button sound effect
+    const audioButtonInstance = new Audio("soundtracks/button.mp3");
+    audioButtonInstance.play().catch((error) => {
+      console.error("Audio playback error:", error);
+    });
+    
     if (roomCode !== null && roomCode.trim() && username !== null && username.trim()) {
       fetch('/api/join-room', {
         method: "POST",
