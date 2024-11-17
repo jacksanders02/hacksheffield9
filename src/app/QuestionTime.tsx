@@ -2,6 +2,12 @@ import React, {useEffect, useRef, useState} from "react";
 import { useRouter} from "next/navigation";
 import {BarBackground} from "@/components/barBackground";
 
+interface JudgeAnswer {
+  response: string;
+  value: string;
+  loaded: boolean;
+}
+
 function useInterval(callback: () => void, delay: number) {
   const savedCallback = useRef<() => void>(() => {});
 
@@ -53,20 +59,24 @@ export default function QuestionTime({
   const [theme, setTheme] = useState("loading...");
   const [time, setTime] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const [answersLoaded, setAnswersLoaded] = useState(false);
-  const [judgement, setJudgement] = useState("");
-  const [hiddenScore, setHiddenScore] = useState(0);
   const [response, setResponse] = useState(""); // State for the textarea content
   const [audio, setAudio] = useState<HTMLAudioElement>();
   const [moneyAudio, setMoneyAudio] = useState<HTMLAudioElement>();
-  const router = useRouter();
 
   useEffect(() => {
     setAudio(new Audio("../soundtracks/button.mp3"));
     setMoneyAudio(new Audio("../soundtracks/gain_money.mp3"));
   }, []);
 
-  const submitAnswer = (judge: number) => {
+  const baseArray = Array(4).fill(undefined).map(() => ({
+    response: "",
+    value: "",
+    loaded: false,
+  }));
+  const [answers, setAnswers] = useState<JudgeAnswer[]>(baseArray);
+  const router = useRouter();
+
+  const submitAnswer = (inferenceJudge: number) => {
     audio?.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
@@ -74,27 +84,29 @@ export default function QuestionTime({
     fetch('/api/submit-answer', {
       method: "POST",
       body: JSON.stringify({
-        judge: judges[judge],
+        judge: judges[inferenceJudge],
         theme,
         plan: response,
       })
     }).then(response => response.json())
       .then(json => {
         const { response, value } = json;
-        setHiddenScore(parseInt(value));
-        addScore(parseInt(value));
-        setAnswersLoaded(true);
-        setJudgement(response);
-        moneyAudio?.play().catch((error) => {
-          console.error("Audio playback error:", error);
-        });
+        const newAnswers = [...answers];
+        newAnswers[inferenceJudge].response = response;
+        newAnswers[inferenceJudge].value = value;
+        newAnswers[inferenceJudge].loaded = true;
+        setAnswers(newAnswers);
+        if (inferenceJudge < judges.length - 1) {
+          submitAnswer(inferenceJudge + 1);
+        }
       });
   }
 
   const incrementJudge = () => {
-    submitAnswer(judge + 1);
+    moneyAudio?.play().catch((error) => {
+      console.error("Audio playback error:", error);
+    });
     setJudge(judge + 1);
-    setAnswersLoaded(false);
   }
 
   useEffect(() => {
@@ -104,10 +116,21 @@ export default function QuestionTime({
 
     setTime(0)
     setSubmitted(false)
-    setAnswersLoaded(false)
+    const baseArray = Array(4).fill(undefined).map(() => ({
+      response: "",
+      value: "",
+      loaded: false,
+    }));
+    setAnswers(baseArray);
     setJudge(0)
     setResponse("")
   }, [roundNumber, router]);
+
+  useEffect(() => {
+    if (answers[judge].loaded) {
+      addScore(parseInt(answers[judge].value));
+    }
+  }, [judge, answers]);
 
   useInterval(() => {
     setTime(time + 100);
@@ -157,14 +180,14 @@ export default function QuestionTime({
             </div>
           </>
         )}
-        {submitted && !answersLoaded && (
+        {submitted && !answers[judge].loaded && (
           <>
             <div className="flex-1 flex items-center justify-center">
               <p className="text-white text-shadow-effect text-3xl">loading judgement...</p>
             </div>
           </>
         )}
-        {submitted && answersLoaded && (
+        {submitted && answers[judge].loaded && (
           <>
             <div className="flex flex-row w-full">
               {/* Absolute positioning for user-status-list */}
@@ -183,11 +206,11 @@ export default function QuestionTime({
                 <div className="p-4 w-full max-w-[600px]">
                   <div className="speech-bubble sm:min-h-[500px] p-4 bg-white speech-box flex flex-col">
                     <div className="text-base sm:text-2xl flex-grow">
-                      {judgeProperNames[judge]} says... {judgement}
+                      {judgeProperNames[judge]} says... {answers[judge].response}
                     </div>
                     <div className="flex flex-row justify-between items-center">
                       <img src={`/characters/${judges[judge]}.png`} className="h-[60px] sm:h-[120px]"/>
-                      <div className="ml-auto text-6xl text-yellow-500 text-shadow-effect">£{hiddenScore}</div>
+                      <div className="ml-auto text-6xl text-yellow-500 text-shadow-effect">£{answers[judge].value}</div>
                     </div>
                   </div>
                 </div>
