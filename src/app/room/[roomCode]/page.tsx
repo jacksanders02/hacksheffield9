@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { BarBackground } from "@/components/barBackground";
 import { pusherClient } from "@/lib/pusher";
 import {Channel} from "pusher-js";
+import { Judge } from "@/components/Judge";
 
 // Define the shape of the Member object
 interface Member {
@@ -130,36 +131,10 @@ const RoomPage: React.FC = () => {
         <div className="p-5 pb-0">
           <h1 className="text-4xl text-white text-shadow-effect">meet your judges</h1>
           <div className="flex flex-row space-x-5">
-
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/countess.png" />
-              <p className="text-white text-shadow-effect text-3xl">Countess Crookes</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
-                Professional and successful entrepreneur with expert knowledge
-              </p>
-            </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/sustainability.png" />
-              <p className="text-white text-shadow-effect text-3xl">Sue Stainability</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
-                Cares about sustainability and inclusivity in business solutions
-              </p>
-            </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/dave.png" />
-              <p className="text-white text-shadow-effect text-3xl">Dave O' Pub</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
-                Always drunk, enjoys the pub, and gives honest opinions on business ideas 
-              </p>
-            </div>
-            <div className="judge-box flex flex-col items-center justify-between text-center max-w-[200px] flex-grow">
-              <img className="h-[200px] max-w-full object-contain" src="/characters/child.png" />
-              <p className="text-white text-shadow-effect text-3xl">Tiny Tim</p>
-              <p className="text-white text-shadow-effect text-lg break-words px-2 min-h-[85px] hidden sm:block">
-                Very naive and enjoys humour in business solutions
-              </p>
-            </div>
-
+            <Judge name="Countess Crookes" description="Professional and successful entrepreneur with expert knowledge" imgLink="countess.png" />
+            <Judge name="Sue Stainability" description="Cares about sustainability and inclusivity in business solutions" imgLink="sustainability.png" />
+            <Judge name="Dave O' Pub" description="Always drunk, enjoys the pub, and gives honest opinions on business ideas" imgLink="dave.png" />
+            <Judge name="Tiny Tim" description="Very naive and enjoys humour in business solutions" imgLink="child.png" />
           </div>
         </div>
         <div className="p-5">
