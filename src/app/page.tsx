@@ -53,7 +53,7 @@ const RoomPage: React.FC = () => {
       {(round < 0) && (
         <Leaderboard
           players={[{
-            username: "You!",
+            username,
             score: score,
           }]}
         />
