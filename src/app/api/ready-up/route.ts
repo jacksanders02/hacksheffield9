@@ -1,12 +1,21 @@
 import {NextRequest} from "next/server";
-import { userReady } from "@/lib/gameLoop";
 
 export async function POST(request: NextRequest): Promise<Response> {
-  const requestBody = await request.json();
-  const username = requestBody.username;
-  const room = requestBody.room;
+  const { searchParams } = new URL(request.url);
+  const roomCode = searchParams.get("roomCode");
+  const username = searchParams.get("username");
 
-  userReady(room, username);
+  const ready = await fetch(`${process.env.PYTHON_BACKEND_URL}/room/${roomCode}/user/${username}/ready`, {
+    method: "POST",
+  }).then(r => {
+    if (r.status !== 200) {
+      throw new Error("Could not ready up :(");
+    }
 
-  return new Response(null, { status: 200 });
+    return r.json();
+  }).then(data => {
+    return data
+  });
+
+  return new Response(ready, { status: 200 });
 }

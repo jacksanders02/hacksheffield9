@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BarBackground } from "@/components/barBackground";
 import { pusherClient } from "@/lib/pusher";
+import {Channel} from "pusher-js";
 
 // Define the shape of the Member object
 interface Member {
@@ -13,26 +14,58 @@ interface Member {
   };
 }
 
+interface UIMember {
+  username: string;
+  ready: boolean;
+}
+
 // Define the structure of the members object, which can loop through members
 interface Members {
   each: (callback: (member: Member) => void) => void;
 }
 
 const RoomPage: React.FC = () => {
-  const [members, setMembers] = useState<string[]>([]);
+  const [members, setMembers] = useState<UIMember[]>([]);
   const [ready, setReady] = useState<boolean>(false);
+  const [roomReady, setRoomReady] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>();
+  const [channel, setChannel] = useState<Channel>();
 
   const roomCode = usePathname().replace("/room/", ""); // Extract roomCode from the path
   const router = useRouter();
 
+  const startListener = () => {
+    if (!username || !channel) {
+      return;
+    }
+
+    fetch(`/api/ready-up?username=${username}&roomCode=presence-${roomCode}`, {
+      method: "POST",
+    }).then(r => {
+      if (r.status !== 200) {
+        throw new Error("Could not ready up :(");
+      }
+
+      return r.json();
+    }).then(data => {
+      setReady(data);
+      channel.trigger('client-member_ready', { username, readyStatus: data });
+      members.find((member) => member.username === username)!.ready = data;
+    });
+  }
+
   useEffect(() => {
     const channel = pusherClient.subscribe(`presence-${roomCode}`);
+    setChannel(channel);
   
     // Listen for the successful subscription event
     channel.bind("pusher:subscription_succeeded", (members: Members) => {
-      const memberList: string[] = [];
+      const memberList: UIMember[] = [];
       members.each((member: Member) => {
-        memberList.push(member.info.username);
+        memberList.push({
+          username: member.info.username,
+          ready: false
+        });
       });
       setMembers(memberList);
     });
@@ -40,32 +73,46 @@ const RoomPage: React.FC = () => {
     // Listen for when a new member joins
     channel.bind("pusher:member_added", (member: Member) => {
       console.log("New member added: ", member.info.username);
-      setMembers((prevMembers) => [...prevMembers, member.info.username]);
+      setMembers((prevMembers) => [
+        ...prevMembers,
+        {
+          username: member.info.username,
+          ready: false
+        }
+      ]);
     });
   
     // Listen for when a member leaves
     channel.bind("pusher:member_removed", (member: Member) => {
       console.log("Member removed: ", member.info.username);
       setMembers((prevMembers) =>
-        prevMembers.filter((username) => username !== member.info.username)
+        prevMembers.filter(({ username }) => username !== member.info.username)
       );
     });
   
     // Listen for game start event
     channel.bind("game_start", () => {
-      setReady(true);
+      setRoomReady(true);
     });
-  
+
+    // Listen for ready event
+    channel.bind("client-member_ready", ({ username, readyStatus }: {
+      username: string;
+      readyStatus: boolean;
+    }) => {
+      members.find((member) => member.username === username)!.ready = readyStatus;
+    });
+
+    const username = sessionStorage.getItem("username");
+    if (username === null) {
+      return;
+    }
+    setUsername(username);
     // Cleanup on component unmount
     return () => {
       pusherClient.unsubscribe(`presence-${roomCode}`);
     };
   }, [roomCode]);
-  
-
-  const handleStartClick = () => {
-    router.push("/results"); // navigate to /results
-  };
 
   return (
     <>
@@ -74,10 +121,10 @@ const RoomPage: React.FC = () => {
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between">
           <h1 className="text-4xl text-white text-shadow-effect">room id: {roomCode}</h1>
           <button 
-            onClick={handleStartClick} 
+            onClick={startListener}
             className="bg-gray-900 text-white text-4xl px-4 py-2"
           >
-            Start
+            {ready ? "Un-ready" : "Ready Up!"}
           </button>
         </div>
         <div className="p-5 pb-0">
@@ -119,9 +166,9 @@ const RoomPage: React.FC = () => {
           <h1 className="text-4xl text-white text-shadow-effect">players ({members.length})</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
             { members.map((member) => (
-              <div key={member} className="text-white text-shadow-effect text-3xl flex items-center justify-center">
+              <div key={member.username} className="text-white text-shadow-effect text-3xl flex items-center justify-center">
                 <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png" alt="good connection"/>
-                {member}
+                {member.username} {member.ready ? " (Ready)" : ""}
               </div>
             ))}
           </div>
