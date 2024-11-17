@@ -10,7 +10,7 @@ const EnterNamePage = ({ enterName }: { enterName: (username: string) => void })
 
   useEffect(() => {
     setAudio(new Audio("../soundtracks/button.mp3"));
-    setMusic(new Audio("soundtracks/loading_menu.mp3"));
+    setMusic(new Audio("../soundtracks/loading_menu.mp3"));
   }, []);
 
   const joinRoom = () => {
@@ -20,11 +20,11 @@ const EnterNamePage = ({ enterName }: { enterName: (username: string) => void })
       console.error("Audio playback error:", error);
     });
 
-    if (music?.paused) {
+    if (music) {
       music.loop = true;
       // Play audio and handle any play errors
       music.addEventListener("canplaythrough", () => {
-        music.play().catch((error) => {
+        music?.play().catch((error) => {
           console.error("Audio playback error:", error);
         });
       });

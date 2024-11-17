@@ -16,7 +16,6 @@ const RoomPage: React.FC = () => {
   }, []);
 
   const advanceRound = () => {
-    document.querySelectorAll('audio').forEach(el => el.pause());
     audio?.play().catch((error) => {
       console.error("Audio playback error:", error);
     });
