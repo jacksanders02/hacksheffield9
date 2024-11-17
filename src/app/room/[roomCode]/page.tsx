@@ -28,53 +28,42 @@ const RoomPage: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-        return;
-    }
-
-    const storedUsername = sessionStorage.getItem("username");
-
-    if (storedUsername) {
-        setUsername(storedUsername);
-    } else {
-        router.push("/enter-name");
-    }
-
     const channel = pusherClient.subscribe(`presence-${roomCode}`);
-
+  
     // Listen for the successful subscription event
     channel.bind("pusher:subscription_succeeded", (members: Members) => {
-      console.log("HUGE SUCCESS!!!!!");
       const memberList: string[] = [];
       members.each((member: Member) => {
         memberList.push(member.info.username);
       });
       setMembers(memberList);
     });
-
+  
     // Listen for when a new member joins
-    channel.bind("pusher_internal:member_added", (member: Member) => {
-      console.log("MEMBER ADDED !!!!!!!!!!!!!!!!!!!!!!");
+    channel.bind("pusher:member_added", (member: Member) => {
+      console.log("New member added: ", member.info.username);
       setMembers((prevMembers) => [...prevMembers, member.info.username]);
     });
-
+  
     // Listen for when a member leaves
     channel.bind("pusher:member_removed", (member: Member) => {
+      console.log("Member removed: ", member.info.username);
       setMembers((prevMembers) =>
         prevMembers.filter((username) => username !== member.info.username)
       );
     });
-
+  
     // Listen for game start event
     channel.bind("game_start", () => {
       setReady(true);
     });
-
+  
     // Cleanup on component unmount
     return () => {
       pusherClient.unsubscribe(`presence-${roomCode}`);
     };
   }, [roomCode]);
+  
 
   const handleStartClick = () => {
     // Button sound effect
