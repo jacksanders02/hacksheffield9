@@ -45,6 +45,7 @@ const EnterNamePage = () => {
 
   return (
     <>
+      <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
         <BarBackground />
         <h1 className="text-4xl text-white text-shadow-effect mb-11">Enter Your Name</h1>
         <div className="flex gap-1 w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
@@ -63,6 +64,7 @@ const EnterNamePage = () => {
             Submit
             </button>
         </div>
+      </div>
     </>
   );
 };
