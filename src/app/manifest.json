@@ -1,0 +1,17 @@
+{
+  "theme_color": "#212121",
+  "background_color": "#212121",
+  "icons": [
+    { "src": "/icons/favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
+    { "src": "/icons/icon_192_maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
+    { "src": "/icons/app_icons/icon_512_maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ],
+  "orientation": "any",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "en-GB",
+  "name": "growth",
+  "short_name": "growth",
+  "start_url": "/",
+  "scope": "/"
+}

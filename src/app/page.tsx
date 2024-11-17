@@ -54,7 +54,7 @@ const HomePage = () => {
         </div>
 
         {/* Input for room code */}
-        <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
+        {/* <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           <input
             type="text"
             className="p-2 mr-2 text-4xl w-full"
@@ -71,10 +71,10 @@ const HomePage = () => {
             join
           </button>
         </div>
-        <p className="text-3xl text-white text-shadow-effect">or</p>
+        <p className="text-3xl text-white text-shadow-effect">or</p> */}
         <div className="flex gap-1 w-[90%] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl">
           <button className="bg-gray-900 text-white text-4xl px-4 py-2 w-full">
-            create game (TODO)
+            start game
           </button>
         </div>
         <div className="mt-11 mb-11"> 

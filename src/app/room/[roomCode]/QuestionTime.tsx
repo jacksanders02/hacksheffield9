@@ -1,3 +1,7 @@
+function capitalizeFirstLetter(val: String) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
 import React, {useEffect, useReducer, useRef, useState} from "react";
 import { useRouter} from "next/navigation";
 import {BarBackground} from "@/components/barBackground";
@@ -111,7 +115,7 @@ export default function QuestionTime({
 
   return (
     <>
-      <div className="relative min-h-screen overflow-hidden flex flex-col">
+      <div className="relative min-h-[100dvh] overflow-hidden flex flex-col">
         <BarBackground />
         <div className="w-full bg-black p-5 bg-opacity-50 flex flex-row items-center justify-between min-h-[96px]">
           <h1 className="text-4xl text-white text-shadow-effect">prompt: {theme.toLowerCase()}</h1>
@@ -128,11 +132,11 @@ export default function QuestionTime({
             </div>
             {/* Center the textarea */}
             <div className="flex-1 flex flex-col items-center justify-center space-y-4">
-              <div className="w-[80%] flex justify-end text-white text-shadow-effect text-3xl">
+              <div className="w-[90%] flex justify-end text-white text-shadow-effect text-3xl">
                 {response.length}/{maxCharacters}
               </div>
               <textarea
-                className="p-4 text-4xl w-[80%] h-[300px] resize-none"
+                className="p-4 text-4xl w-[90%] h-[300px] resize-none"
                 placeholder="your response"
                 spellCheck={false}
                 value={response}
@@ -154,14 +158,16 @@ export default function QuestionTime({
         )}
         {submitted && !answersLoaded && (
           <>
-            <p>loading judgement</p>
+            <div className="flex-1 flex items-center justify-center">
+              <p className="text-white text-shadow-effect text-3xl">loading judgement...</p>
+            </div>
           </>
         )}
         {submitted && answersLoaded && (
           <>
             <div className="flex flex-row w-full">
               {/* Absolute positioning for user-status-list */}
-              <div className="user-status-list absolute top-26 left-0 p-4 z-10">
+              <div className="user-status-list absolute top-26 left-0 p-4 z-10 opacity-70 sm:opacity-100">
                 <div className="user-status">
                   <div className="text-white text-shadow-effect text-3xl flex items-center justify-start">
                     <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png"/>
@@ -172,14 +178,14 @@ export default function QuestionTime({
               </div>
 
               {/* Judge Output */}
-              <div className="judge-output ml-32 p-4 z-0 sm:ml-32 md:ml-32 lg:ml-36 xl:ml-auto">
+              <div className="judge-output ml-2 p-4 z-0 sm:ml-32 md:ml-32 lg:ml-36 xl:ml-auto">
                 <div className="p-4 w-full max-w-[600px]">
-                  <div className="speech-bubble min-h-[500px] p-4 bg-white speech-box flex flex-col">
-                    <div className="text-2xl flex-grow">
-                      {judgement}
+                  <div className="speech-bubble sm:min-h-[500px] p-4 bg-white speech-box flex flex-col">
+                    <div className="text-base sm:text-2xl flex-grow">
+                      {capitalizeFirstLetter(judges[judge])} says... {judgement}
                     </div>
                     <div className="flex flex-row justify-between items-center">
-                      <img src={`/characters/${judges[judge]}.png`} className="h-[120px]"/>
+                      <img src={`/characters/${judges[judge]}.png`} className="h-[60px] sm:h-[120px]"/>
                       <div className="ml-auto text-6xl text-yellow-500 text-shadow-effect">£{hiddenScore}</div>
                     </div>
                   </div>

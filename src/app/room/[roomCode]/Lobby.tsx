@@ -56,7 +56,7 @@ export default function Lobby({
         </div>
         <div className="p-5">
           <h1 className="text-4xl text-white text-shadow-effect">players (1)</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
             <div className="text-white text-shadow-effect text-3xl flex items-center justify-center">
               <img className="h-[20px] max-w-full object-contain mr-2" src="/conn_status.png" alt="good connection"/>
               {username}
